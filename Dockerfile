@@ -8,7 +8,7 @@ RUN ansible-galaxy install \
   ansistrano.deploy,${ANSISTRANO_DEPLOY_VERSION} \
   ansistrano.rollback,${ANSISTRANO_ROLLBACK_VERSION}
 
-RUN mkdir -p /toolbox/toolbox-ansible
-COPY tools /toolbox/toolbox-ansible/tools
+RUN mkdir -p /toolbox/toolbox-ansistrano
+COPY tools /toolbox/toolbox-ansistrano/tools
 
-ENV TOOLBOX_TOOL_DIRS toolbox,/toolbox/toolbox-ansible
+ENV TOOLBOX_TOOL_DIRS toolbox,/toolbox/toolbox-ansistrano
