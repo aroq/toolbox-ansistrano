@@ -1,4 +1,4 @@
-FROM aroq/toolbox-ansible:0.1.0
+FROM aroq/toolbox-ansible:0.1.1
 
 ENV ANSISTRANO_DEPLOY_VERSION=3.4.0
 ENV ANSISTRANO_ROLLBACK_VERSION=3.0.0
