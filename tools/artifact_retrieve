@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC1090
+# shellcheck disable=SC1091
+
+TOOLBOX_UTILS_DIR=${TOOLBOX_UTILS_DIR:-toolbox/deps/toolbox-utils}
+
+# Includes
+. "${TOOLBOX_UTILS_DIR}/includes/init.sh"
+. "${TOOLBOX_UTILS_DIR}/includes/util.sh"
+. "${TOOLBOX_UTILS_DIR}/includes/log.sh"
+. "${TOOLBOX_UTILS_DIR}/includes/exec.sh"
+
+# Directory to prepare artifact archive
+TOOLBOX_ARTIFACT_DIR=${TOOLBOX_ARTIFACT_DIR:-.docroot}
+
+# Git repository address containing release artifacts
+TOOLBOX_ARTIFACT_REPO=${TOOLBOX_ARTIFACT_REPO:-}
+
+# Git reference which holds the artifact
+TOOLBOX_ARTIFACT_REF=${TOOLBOX_ARTIFACT_REF:-}
+
+# Artifact file
+TOOLBOX_ARTIFACT_FILE=${TOOLBOX_ARTIFACT_FILE:-artifact.tar.gz}
+
+
+# Set default param values
+if [ -z "${TOOLBOX_ARTIFACT_REPO}" ]; then
+  TOOLBOX_ARTIFACT_REPO=$(git config --get remote.origin.url)
+fi
+
+if [ -z "${TOOLBOX_ARTIFACT_REF}" ]; then
+  TOOLBOX_ARTIFACT_REF=$(
+    if [ -z ${CI_COMMIT_REF_NAME+x} ]; then
+      git symbolic-ref -q --short HEAD || git describe --tags --exact-match
+    else
+      echo "${CI_COMMIT_REF_NAME}"
+    fi)
+fi
+
+
+toolbox_run "Clear working dir" \
+  rm -fR "${TOOLBOX_ARTIFACT_DIR}/artifact"
+
+toolbox_run "Clone the artifact repo" git clone --quiet -b "${TOOLBOX_ARTIFACT_REF}" --single-branch --depth 1 "${TOOLBOX_ARTIFACT_REPO}" "${TOOLBOX_ARTIFACT_DIR}/artifact" > /dev/null
+
+toolbox_run "Enter artifact repo dir" \
+  cd "${TOOLBOX_ARTIFACT_DIR}/artifact"
+
+toolbox_run "Clean artifact files" \
+  make artifact/clean
+
+toolbox_run "Back into root dir" \
+  cd ../..
+
+toolbox_exec "Prepare the artifact archive" \
+  tar -czf "${TOOLBOX_ARTIFACT_DIR}/${TOOLBOX_ARTIFACT_FILE}" -C "${TOOLBOX_ARTIFACT_DIR}"/artifact .
