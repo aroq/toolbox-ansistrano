@@ -1,3 +1,7 @@
+Version 0.1.11:
+ - Update parent image to aroq/toolbox-ansible:0.1.7
+ - Update parent image to aroq/toolbox-ansible:0.1.6
+
 Version 0.1.10:
  - Add artifact_retrieve tool
 
