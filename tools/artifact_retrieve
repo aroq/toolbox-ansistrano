@@ -11,6 +11,8 @@ TOOLBOX_UTILS_DIR=${TOOLBOX_UTILS_DIR:-toolbox/deps/toolbox-utils}
 . "${TOOLBOX_UTILS_DIR}/includes/log.sh"
 . "${TOOLBOX_UTILS_DIR}/includes/exec.sh"
 
+if [ "${TOOLBOX_LOG_LEVEL}" = "DEBUG" ] || [ "${TOOLBOX_LOG_LEVEL}" = "TRACE" ]; then set -x; fi
+
 # Directory to prepare artifact archive
 TOOLBOX_ARTIFACT_DIR=${TOOLBOX_ARTIFACT_DIR:-.docroot}
 
@@ -52,6 +54,8 @@ toolbox_run "Clean artifact files" \
 
 toolbox_run "Back into root dir" \
   cd ../..
+
+if [ "${TOOLBOX_LOG_LEVEL}" = "DEBUG" ] || [ "${TOOLBOX_LOG_LEVEL}" = "TRACE" ]; then set +x; fi
 
 toolbox_exec "Prepare the artifact archive" \
   tar -czf "${TOOLBOX_ARTIFACT_DIR}/${TOOLBOX_ARTIFACT_FILE}" -C "${TOOLBOX_ARTIFACT_DIR}"/artifact .
