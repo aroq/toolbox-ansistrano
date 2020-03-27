@@ -12,3 +12,5 @@ RUN mkdir -p /toolbox/toolbox-ansistrano
 COPY tools /toolbox/toolbox-ansistrano/tools
 
 ENV TOOLBOX_TOOL_DIRS toolbox,/toolbox/toolbox-ansistrano
+
+ENV ANSIBLE_ROLES_PATH /root/.ansible/roles
