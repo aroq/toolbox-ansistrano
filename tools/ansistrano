@@ -3,9 +3,7 @@
 # shellcheck disable=SC1090
 # shellcheck disable=SC1091
 
-set -x
 TOOLBOX_UTILS_DIR=${TOOLBOX_UTILS_DIR:-toolbox/deps/toolbox-utils}
-set +x
 
 # Includes
 . "${TOOLBOX_UTILS_DIR}/includes/init.sh"
