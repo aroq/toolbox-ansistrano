@@ -3,13 +3,13 @@
 # shellcheck disable=SC1090
 # shellcheck disable=SC1091
 
-TOOLBOX_UTILS_DIR=${TOOLBOX_UTILS_DIR:-toolbox/deps/toolbox-utils}
+TOOLBOX_DEPS_DIR=${TOOLBOX_DEPS_DIR:-toolbox/deps}
 
 # Includes
-. "${TOOLBOX_UTILS_DIR}/includes/init.sh"
-. "${TOOLBOX_UTILS_DIR}/includes/util.sh"
-. "${TOOLBOX_UTILS_DIR}/includes/log.sh"
-. "${TOOLBOX_UTILS_DIR}/includes/exec.sh"
+. "${TOOLBOX_DEPS_DIR}/toolbox-utils/includes/init.sh"
+. "${TOOLBOX_DEPS_DIR}/toolbox-utils/includes/util.sh"
+. "${TOOLBOX_DEPS_DIR}/toolbox-utils/includes/log.sh"
+. "${TOOLBOX_DEPS_DIR}/toolbox-exec/includes/exec.sh"
 
 # Directory where playbook files are contained
 TOOLBOX_ANSISTRANO_PLAYBOOK_DIR=${TOOLBOX_ANSISTRANO_PLAYBOOK_DIR:-toolbox/ansible}
