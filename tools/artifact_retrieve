@@ -47,11 +47,12 @@ toolbox_run "Clone the artifact repo" git clone --quiet -b "${TOOLBOX_ARTIFACT_R
 toolbox_run "Enter artifact repo dir" \
   cd "${TOOLBOX_ARTIFACT_DIR}/artifact"
 
+toolbox_exec_hook "toolbox_ansistrano_clean_artifact" "before"
+
 toolbox_run "Remove .git dir" \
   rm -fR .git
 
-toolbox_run "Clean artifact files" \
-  make artifact/clean
+toolbox_exec_hook "toolbox_ansistrano_clean_artifact" "after"
 
 toolbox_run "Back into root dir" \
   cd ../..
